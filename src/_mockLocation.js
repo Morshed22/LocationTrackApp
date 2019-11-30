@@ -6,8 +6,8 @@ const getlocation = increment =>{
     return{
         timestamp:10000000,
         coords:{
-            latitude:23.8103 + increment * tenMetersWithDegrees,
-            longitude:90.4125 + increment * tenMetersWithDegrees,
+            latitude:23.794367 + increment * tenMetersWithDegrees,
+            longitude:90.429756 + increment * tenMetersWithDegrees,
             altitude:5,
             altitudeAccuracy:5,
             accuracy:5,

@@ -1,16 +1,23 @@
-import React,{useContext}from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, StyleSheet, TouchableOpacity} from "react-native";
+import {NavigationEvents} from "react-navigation";
 import {Text} from "react-native-elements";
 import Spacer from "../components/Spacer";
-import {Context as AuthContext}  from "../context/AuthContext";
+import {Context as AuthContext} from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/Navlink";
 
 const SignupScreen = ({navigation}) => {
-    const {state, signup} = useContext(AuthContext);
+    const {state, signup, clearErrorMessage, tryLocalSignin} = useContext(AuthContext);
+
+    useEffect(() => {
+        tryLocalSignin();
+    }, []);
 
     return (
         <View style={styles.container}>
+            <NavigationEvents onWillBlur={clearErrorMessage}
+            />
             <AuthForm
                 headerText="Sign Up for Tracker"
                 submitButtonText="Sign Up"
@@ -24,16 +31,16 @@ const SignupScreen = ({navigation}) => {
         </View>
     );
 };
-SignupScreen.navigationOptions = ()=>{
+SignupScreen.navigationOptions = () => {
     return {
-        header:null
+        header: null
     }
 };
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        justifyContent:'center',
-        marginBottom:250
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        marginBottom: 250
 
     }
 });

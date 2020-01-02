@@ -1,26 +1,19 @@
 import createDataContext from "./createDataContext";
-
+import trackerApi from '../api/tracker'
 const trackReducer = (state, action)=>{
     switch (action.type) {
-        case 'add_current_location':
-            return {...state, currentLocation:action.payload};
-        case 'start_recording':
-            return {...state, recording:true};
-        case 'stop_recording':
-            return {...state, recording:false};
-        case 'add_location':
-            return {...state, locations:[...state.locations, action.payload]};
-        case 'change_name':
-            return {...state, name:action.payload};
+        case 'fetch_tracks':
+            return action.payload;
         default:
             return state;
     }
 };
-const fetchTracks = dispatch => (name)=>{
-    dispatch({type:'change_name', payload:name});
+const fetchTracks = dispatch => async ()=>{
+    const response = await  trackerApi.get('/tracks');
+    dispatch ({type:'fetch_tracks', payload:response.data});
 };
-const createTrack = dispatch => (name, locations)=>{
-    console.log(name, locations.length);
+const createTrack = dispatch => async (name, locations)=>{
+     await trackerApi.post('/tracks', {name, locations});
 };
 
 
